@@ -6,16 +6,21 @@
  */
 
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Background from './src/Background';
+import BlurContainer from './src/Components/BlurContainer';
 
 function App(): JSX.Element {
   return (
-
     <Background>
-      <View style={styles.container}>
-        <Text>Humble beginnings</Text>
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <Text>Humble beginnings</Text>
+          <BlurContainer>
+            <Text>Blur</Text>
+          </BlurContainer>
+        </View>
+      </ScrollView>
     </Background>
   );
 }
