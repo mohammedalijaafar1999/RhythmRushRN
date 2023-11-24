@@ -1,4 +1,6 @@
-const CoffeeData = [
+import Coffee from '../types/Coffee';
+
+const CoffeeData: Coffee[] = [
   {
     id: 'C1',
     name: 'Americano',

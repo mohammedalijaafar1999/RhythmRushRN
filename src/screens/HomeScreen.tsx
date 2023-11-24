@@ -1,9 +1,18 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {useStore} from '../store/store';
+import Coffee from '../types/Coffee';
+import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
+import {COLORS} from '../theme/theme';
+import {ScrollView} from 'react-native';
+import HeaderBar from '../components/HeaderBar';
 
-const getCategoriesFromData = (data: any) => {
-  let temp: any = {};
+interface CategoryCount {
+  [categoryName: string]: number;
+}
+
+const getCategoriesFromData = (data: Coffee[]) => {
+  let temp: CategoryCount = {};
   for (let i = 0; i < data.length; i++) {
     if (temp[data[i].name] == undefined) {
       temp[data[i].name] = 1;
@@ -16,24 +25,54 @@ const getCategoriesFromData = (data: any) => {
   return categories;
 };
 
+const getCoffeeList = (category: string, data: Coffee[]) => {
+  if (category == 'All') {
+    return data;
+  } else {
+    let coffelist = data.filter(item => item.name == category);
+    return coffelist;
+  }
+};
+
 export default function HomeScreen() {
   const CoffeeList = useStore((state: any) => state.CoffeList);
   console.log('CoffeeList', CoffeeList);
-  const [categories, setCategories] = useState([undefined]);
+  const [categories, setCategories] = useState(
+    getCategoriesFromData(CoffeeList),
+  );
   const [searchText, setSearchText] = useState(undefined);
   const [categoryIndex, setCategoryIndex] = useState({
     index: 0,
     category: categories[0],
   });
-  const [sortedCoffee, setSortedCoffee] = useState(undefined);
+  const [sortedCoffee, setSortedCoffee] = useState(
+    getCoffeeList(categoryIndex.category, CoffeeList),
+  );
+
+  const tabBarHeight = useBottomTabBarHeight();
 
   return (
-    <View>
-      <Text>HomeScreen</Text>
+    <View style={styles.ScreenContainer}>
+      <StatusBar backgroundColor={COLORS.primaryBlackHex}></StatusBar>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.ScrollViewFlex}>
+        {/* App Header */}
+        <HeaderBar></HeaderBar>
+      </ScrollView>
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  ScreenContainer: {
+    flex: 1,
+    backgroundColor: COLORS.primaryBlackHex,
+  },
+
+  ScrollViewFlex: {
+    flexGrow: 1,
+  },
+});
 
 // export default HomeScreen;
