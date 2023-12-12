@@ -1,4 +1,11 @@
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import React, {useState} from 'react';
 import {useStore} from '../store/store';
 import Coffee from '../types/Coffee';
@@ -6,6 +13,8 @@ import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
 import {COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import {ScrollView} from 'react-native';
 import HeaderBar from '../components/HeaderBar';
+import CustomIcon from '../components/CustomIcon';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface CategoryCount {
   [categoryName: string]: number;
@@ -40,7 +49,7 @@ export default function HomeScreen() {
   const [categories, setCategories] = useState(
     getCategoriesFromData(CoffeeList),
   );
-  const [searchText, setSearchText] = useState(undefined);
+  const [searchText, setSearchText] = useState('');
   const [categoryIndex, setCategoryIndex] = useState({
     index: 0,
     category: categories[0],
@@ -62,6 +71,33 @@ export default function HomeScreen() {
         <Text style={styles.ScreenTitle}>
           Find the best {'\n'}coffee for you
         </Text>
+
+        {/* Search Input */}
+        <View style={styles.SearchInputContainer}>
+          <TouchableOpacity onPress={() => {}}>
+            <Icon
+              name="magnify"
+              color={
+                searchText.length > 0
+                  ? COLORS.primaryOrangeHex
+                  : COLORS.primaryGreyHex
+              }
+              size={FONTSIZE.size_18}
+              style={styles.InputIcon}
+            />
+          </TouchableOpacity>
+          <TextInput
+            placeholder="Find your coffee"
+            placeholderTextColor={COLORS.primaryLightGreyHex}
+            value={searchText}
+            onChangeText={text => {
+              setSearchText(text);
+            }}
+            style={styles.TextInputContaier}
+          />
+        </View>
+
+        {/* Category Scroller  */}
       </ScrollView>
     </View>
   );
@@ -71,6 +107,8 @@ const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
     backgroundColor: COLORS.primaryBlackHex,
+    paddingLeft: SPACING.space_30,
+    paddingRight: SPACING.space_30,
   },
 
   ScrollViewFlex: {
@@ -81,7 +119,27 @@ const styles = StyleSheet.create({
     fontFamily: FONTFAMILY.poppins_semibold,
     fontSize: FONTSIZE.size_28,
     color: COLORS.primaryWhiteHex,
-    paddingLeft: SPACING.space_30,
+  },
+
+  SearchInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: SPACING.space_30,
+    borderRadius: SPACING.space_20,
+    backgroundColor: COLORS.primaryDarkGreyHex,
+    // paddingLeft: SPACING.space_30,
+  },
+
+  InputIcon: {
+    marginHorizontal: SPACING.space_20,
+  },
+
+  TextInputContaier: {
+    flex: 1,
+    height: SPACING.space_20 * 3,
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_14,
+    color: COLORS.primaryWhiteHex,
   },
 });
 
