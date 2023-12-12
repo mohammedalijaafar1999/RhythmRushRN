@@ -1,7 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {COLORS} from '../theme/theme';
+import {COLORS, SPACING} from '../theme/theme';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface GradientBGIconProps {
   name: string;
@@ -16,7 +18,9 @@ const GradientBGIcon: React.FC<GradientBGIconProps> = ({name, color, size}) => {
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         colors={[COLORS.primaryGreyHex, COLORS.primaryBlackHex]}
-        style={styles.LinearGradientBG}></LinearGradient>
+        style={styles.LinearGradientBG}>
+        <Icon name={name} color={color} size={size} />
+      </LinearGradient>
     </View>
   );
 };
@@ -25,12 +29,18 @@ export default GradientBGIcon;
 
 const styles = StyleSheet.create({
   Container: {
-    width: 50,
-    height: 50,
+    borderWidth: 2,
+    borderColor: COLORS.secondaryDarkGreyHex,
+    borderRadius: SPACING.space_12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.secondaryDarkGreyHex,
+    overflow: 'hidden',
   },
   LinearGradientBG: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    height: SPACING.space_36,
+    width: SPACING.space_36,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

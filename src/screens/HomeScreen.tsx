@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {useStore} from '../store/store';
 import Coffee from '../types/Coffee';
 import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs';
-import {COLORS} from '../theme/theme';
+import {COLORS, FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 import {ScrollView} from 'react-native';
 import HeaderBar from '../components/HeaderBar';
 
@@ -58,7 +58,10 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
         {/* App Header */}
-        <HeaderBar></HeaderBar>
+        <HeaderBar />
+        <Text style={styles.ScreenTitle}>
+          Find the best {'\n'}coffee for you
+        </Text>
       </ScrollView>
     </View>
   );
@@ -72,6 +75,13 @@ const styles = StyleSheet.create({
 
   ScrollViewFlex: {
     flexGrow: 1,
+  },
+
+  ScreenTitle: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_28,
+    color: COLORS.primaryWhiteHex,
+    paddingLeft: SPACING.space_30,
   },
 });
 
